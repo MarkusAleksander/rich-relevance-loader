@@ -1,0 +1,85 @@
+/* .HP-container div[id^="monetate_selector"] {
+    width: 100%;
+    max-width: 1220px;
+} */
+#hp-rr-insert {
+    
+    color: #000;
+    font-weight: normal;
+    font-size: 100%;
+    width: 100%;
+    font-family: "GalanoGrotesque-Regular";
+    text-decoration: none;
+    margin: 1.5em auto;
+
+    & {
+        * {
+            -webkit-box-sizing: border-box;
+                    box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-size: inherit;
+            color: inherit;
+            text-decoration: inherit;
+            font-weight: inherit;
+            font-family: inherit;
+        }
+        img {
+            display: block;
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+        }
+    }
+
+    .hp-rr-insert__title {
+        font-family: "GalanoGrotesque-SemiBold";
+        font-size: 16px;
+        margin: 0 auto 1em;
+        text-align: center;
+        padding: 0 1em;
+        display: inline-block;
+        background-color: #fff;
+        position: relative;
+    }
+
+    .product-carousel {
+        &__item {
+            padding: 1em;
+        }
+        &__header {
+            margin-bottom: 1em;
+        }
+        &__content {
+            text-align: center;
+
+            p {
+                font-size: 1.4em;
+                
+                & + p {
+                    margin-top: 0.5em;
+                }
+            }
+        }
+        &__title {
+
+        }
+        &__was-price,
+        &__price {
+            text-transform: uppercase;
+        }
+        &__was-price {
+            + .product-carousel__price {
+                color: red;
+            }    
+        }
+        &__price {
+
+        }
+    }
+}
+
+.owl-carousel {
+    -ms-touch-action: none;
+        touch-action: none;
+  }
