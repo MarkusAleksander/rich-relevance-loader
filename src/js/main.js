@@ -1,17 +1,17 @@
+import init from "./init";
 import config from "./config";
-import processConfig from "./processConfig";
-import initialiseRR from "./initialiseRR";
-import processRR from "./processRR";
 import render from "./render";
 
-(function init() {
+// * config for the module
+// * render for displaying the data
+let RR_module = function (config, render) {
+    init(config, render);
+};
 
-    // * process the config to ensure all is correct
-    let processed_config = processConfig(config);
+// * define config
+const rr_config = config;
+// * define rendering
+const rr_render = render;
 
-    // * if the processing failed, don't continue
-    if (!processed_config) return;
-
-    initialiseRR(processRR.bind(null, processed_config, render));
-
-})();
+// * begin the module
+RR_module(rr_config, rr_render);

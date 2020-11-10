@@ -3,49 +3,46 @@ import safeLoop from "./../modules/safeLoop";
 import pollFunction from "./../modules/pollFunction";
 import loadExternalJS from "./../modules/loadExternalJS";
 import loadExternalCSS from "./../modules/loadExternalCSS";
+import checkDefined from "./../modules/checkDefined";
 
 export default function processRR(config, render) {
+    // * set up interval callback to catch the jsonPlacement return
+    // * Recommended RR.jsonCallback has not been found to work correctly
     (function () {
+
+        // * get the placement names to test the returned json data against
+        let config_placements = config.placements.reduce((acc, placement) => {
+            acc.push(placement.placement_name);
+        }, []);
+
         let callback_interval = window.setInterval(function () {
-            if (typeof jsonPlacement === "undefined") return;
+            // * if not defined, return
+            if (!checkDefined(jsonPlacement)) return;
 
-            if (!Array.isArray(jsonPlacement)) return;
+            // * if defined, is it an Array? and it has length
+            if (!Array.isArray(jsonPlacement) && jsonPlacement.length) return;
 
-            let placements = [];
+            // * check jsonPlacement has the placements we're after
+            // * check each item returned contains the placements
+            if (!jsonPlacement.every((json_placement) => {
+                config_placements.indexOf(json_placement.placement_name);
+            })) return;
 
-            safeLoop(jsonPlacement, (idx, placement_data) => {
-                if (config.placement.placement_types.includes(placement_data.placement_name)) {
-                    placements.push(placement_data);
-                }
-            });
-
-            // * TODO - improve array is empty check
-            if (!placements[0]) return;
-
+            // * all is fine, so stop the interval
             window.clearInterval(callback_interval);
 
-            // * could be looped for multiple placements
-            // * render placement here
-            if ($().owlCarousel) {
-                render(config, placements);
-            } else {
-                loadExternalJS("https://images2.drct2u.com:443/repo/common/owl-carousel-2/owl.carousel.min.js", () => {
-                    pollFunction(() => {
-                        return !!$().owlCarousel;
-                    }, () => {
-                        render(config, placements)
-                    });
-                });
-                loadExternalCSS("https://images2.drct2u.com:443/repo/common/owl-carousel-2/owl.carousel.css");
-            }
+            // * pass data to render method
+            render(jsonPlacement);
         }, 1);
     })();
 
-    try {
-        processAffinities(itemObjArray);
-    } catch (e) { }
+    // TODO - NEEDED?
+    // try {
+    //     processAffinities(itemObjArray);
+    // } catch (e) { }
 
     // * primary RR functionality
+    // * set up R3_COMMON
     var R3_COMMON = new r3_common();
 
     // * set the api key
@@ -58,47 +55,52 @@ export default function processRR(config, render) {
     R3_COMMON.setSessionId(getSessionId());
     // * set current user id
     R3_COMMON.setUserId(getUserId());
-    // * set placement type
-    safeLoop(config.placement.placement_types, (idx, placement) => {
-        R3_COMMON.addPlacementType(placement);
+    // * set placement types
+    safeLoop(config.placements, (idx, placement) => {
+        R3_COMMON.addPlacementType(placement.placement_name);
+        // * set item id/s for each placement
+        safeLoop(placement.item_ids, (idx, item_id) => {
+            R3_COMMON.addItemId(item_id.trim().toLocaleUpperCase());
+        });
     });
 
     if (config.page_type === "") {
+        // TODO
         var R3_GENERIC = new r3_generic();
     }
     if (config.page_type === "home") {
+        // TODO
         var R3_HOME = new r3_home();
     }
     if (config.page_type === "category") {
+        // TODO
         var R3_CATEGORY = new r3_category();
-        R3_CATEGORY.setId(config.placement.category_id);
-        R3_CATEGORY.setName(config.placement.category_name);
+        // R3_CATEGORY.setId(config.placement.category_id);
+        // R3_CATEGORY.setName(config.placement.category_name);
     }
     if (config.page_type === "item") {
+        // TODO
         var R3_ITEM = new r3_item();
         // TODO - Get code of item
         // R3_ITEM.setId(config.placement.item_id);
         // TODO - Get name of item
         // R3_ITEM.setName(config.placement.item_name);
-        if (config.placement.category_hint_id && config.placement.category_hint_id !== "") {
-            R3_COMMON.addCategoryHintId(config.placement.category_hint_id);
-        }
+        // if (config.placement.category_hint_id && config.placement.category_hint_id !== "") {
+        //     R3_COMMON.addCategoryHintId(config.placement.category_hint_id);
+        // }
     }
     if (config.page_type === "cart") {
+        // TODO
         var R3_CART = new r3_cart();
 
         // TODO - loop through cart products
         // R3_CART.addItemId('21666189', '9876A');
     }
     if (config.page_type === "brand") {
-        R3_COMMON.setPageBrand(config.placement.brand);
+        // TODO
+        // R3_COMMON.setPageBrand(config.placement.brand);
         var R3_BRAND = new r3_brand();
     }
-
-    // * set item id/s
-    safeLoop(config.placement.item_ids, (idx, item_id) => {
-        R3_COMMON.addItemId(item_id);
-    });
 
     // * request the RR placement
     rr_flush_onload();
