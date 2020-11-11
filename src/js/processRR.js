@@ -1,8 +1,5 @@
 import { getSessionId, getUserId } from "./rr_lib";
 import safeLoop from "./../modules/safeLoop";
-import pollFunction from "./../modules/pollFunction";
-import loadExternalJS from "./../modules/loadExternalJS";
-import loadExternalCSS from "./../modules/loadExternalCSS";
 import checkDefined from "./../modules/checkDefined";
 
 export default function processRR(config, render) {
@@ -12,7 +9,7 @@ export default function processRR(config, render) {
 
         // * get the placement names to test the returned json data against
         let config_placements = config.placements.reduce((acc, placement) => {
-            acc.push(placement.placement_name);
+            return acc.concat(placement.placement_name);
         }, []);
 
         let callback_interval = window.setInterval(function () {
@@ -20,19 +17,19 @@ export default function processRR(config, render) {
             if (!checkDefined(jsonPlacement)) return;
 
             // * if defined, is it an Array? and it has length
-            if (!Array.isArray(jsonPlacement) && jsonPlacement.length) return;
+            if (!Array.isArray(jsonPlacement) || !jsonPlacement.length) return;
 
             // * check jsonPlacement has the placements we're after
             // * check each item returned contains the placements
             if (!jsonPlacement.every((json_placement) => {
-                config_placements.indexOf(json_placement.placement_name);
+                return config_placements.indexOf(json_placement.placement_name) > -1;
             })) return;
 
             // * all is fine, so stop the interval
             window.clearInterval(callback_interval);
 
             // * pass data to render method
-            render(jsonPlacement);
+            render(config, jsonPlacement);
         }, 1);
     })();
 
