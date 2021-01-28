@@ -14,7 +14,7 @@ export default function processRR(config, render) {
 
         let callback_interval = window.setInterval(function () {
             // * if not defined, return
-            if (!checkDefined(jsonPlacement)) return;
+            if (!checkDefined(window.jsonPlacement)) return;
 
             // * if defined, is it an Array? and it has length
             if (!Array.isArray(jsonPlacement) || !jsonPlacement.length) return;
