@@ -1,13 +1,8 @@
-/* eslint-disable */
+/* eslint-disable no-undef */
 module.exports = {
-    syntax: "postcss-scss",
     plugins: [
-        require("postcss-nesting")(),
-        require("precss")(),
-        require("postcss-position")(),
-        require("postcss-rgb")(),
         require("postcss-hocus")(),
-        require("postcss-aspect-ratio")(),
+        require('autoprefixer')(),
         require("postcss-sorting")({
             "order": [
                 "custom-properties",
@@ -348,5 +343,5 @@ module.exports = {
                 "text-shadow",
             ],
         }),
-    ],
+    ]
 };

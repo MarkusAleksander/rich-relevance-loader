@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>
+        <%=htmlWebpackPlugin.options.title%>
+    </title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://media.richrelevance.com/rrserver/js/1.2/p13n.js"></script>
+</head>
+
+<body>
+    <script>
+        window.RR_LOADER_PLACEMENT_DATA = {
+            // * can have one or many placements
+            placements: [
+                {
+                    // * placement name
+                    placement_name: "home_page.rr1",
+                    // * selector where RR is to appear
+                    placement_selector: "#product-carousel--1.owl-carousel",
+                    // * item id/s to seed, if required
+                    item_ids: [""],
+                    // * message to appear on the RR - leave blank to use title from RR, set to false if no title to display at all
+                    // * title will appear as a p tag before placement
+                    strategy_message: false,
+                },
+                {
+                    // * placement name
+                    placement_name: "home_page.rr3",
+                    // * selector where RR is to appear
+                    placement_selector: "#product-carousel--2.owl-carousel",
+                    // * item id/s to seed, if required
+                    item_ids: [""],
+                    // * message to appear on the RR - leave blank to use title from RR, set to false if no title to display at all
+                    // * title will appear as a p tag before placement
+                    strategy_message: "",
+                }
+            ],
+            // * RR API key
+            rr_api_key: "3a007e15fc318633",
+            // * is the RR in testing or live?
+            is_live: false,
+            // * options for the RR carousel
+            carousel_config: {
+                nav: false,
+                dots: false,
+                loop: true,
+                autoplay: false,
+                autoWidth: true,
+                margin: 10,
+                responsive: {
+                    768: {
+                        autoWidth: false,
+                        items: 4,
+                        nav: true,
+                        margin: 0
+                    },
+                    1024: {
+                        autoWidth: false,
+                        items: 5,
+                        nav: true,
+                        margin: 0
+                    },
+                    1200: {
+                        autoWidth: false,
+                        items: 6,
+                        nav: true,
+                        margin: 0
+                    },
+                    1300: {
+                        autoWidth: false,
+                        items: 7,
+                        nav: true,
+                        margin: 0
+                    }
+                }
+            },
+            // * page type: one of "" || "home" || "category" || "item" || "cart" || "brand"
+            page_type: "home",
+            // * if using brand type, enter brand ehre
+            brand: "",
+            /* *
+             * to use a custom template, add it here as a string with the following items:
+             *   {url} - product url
+             *   {image} - product image
+             *   {price} - product on sale place
+             *   {was} - product was price
+             *   {save} - saving if product discounted
+             *   {title} - product title
+             *  Add the following data attributes to the elements containing the above replacements
+             *   data-rr-item="save"
+             *   data-rr-item="price"
+             *   data-rr-item="was"
+             *   data-rr-item="title"
+            */
+            custom_template: ""
+        }
+    </script>
+    <h1>This is the template</h1>
+    <div
+        id="product-carousel--1"
+        class="owl-carousel"
+    ></div>
+    <div
+        id="product-carousel--2"
+        class="owl-carousel"
+    ></div>
+</body>
+
+</html>

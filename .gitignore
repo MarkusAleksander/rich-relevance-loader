@@ -1,4 +1,4 @@
-node_modules
-prod
+/node_modules/
 package-lock.json
-example_setup
+dev
+dist
