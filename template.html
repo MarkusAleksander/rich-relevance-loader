@@ -79,7 +79,7 @@
             },
             // * page type: one of "" || "home" || "category" || "item" || "cart" || "brand"
             page_type: "home",
-            // * if using brand type, enter brand ehre
+            // * if using brand type, enter brand here
             brand: "",
             /* *
              * to use a custom template, add it here as a string with the following items:
@@ -95,7 +95,10 @@
              *   data-rr-item="was"
              *   data-rr-item="title"
             */
-            custom_template: ""
+            custom_template: "",
+            // * if you require a custom render function, place it here, leave it commented out if not using
+            // * check src/render.js to view the built in render function and what it does
+            // custom_render: function (config, jsonPlacement) { console.log("Entering custom render"); return false; }
         }
     </script>
     <h1>This is the template</h1>

@@ -10,7 +10,7 @@ import rr_loader_config from "./rr_loader_config";
 export default function render(config, jsonPlacement) {
 
     // * main render function, run once the carousel below this is evaluated
-    function main_render() {
+    function run_render() {
 
         // * Loop over each return placement 
         safeLoop(jsonPlacement, (idx, placement) => {
@@ -101,13 +101,13 @@ export default function render(config, jsonPlacement) {
     // * Check for relevant carousel before running render
     // eslint-disable-next-line no-extra-boolean-cast
     if (!!$().owlCarousel) {
-        main_render();
+        run_render();
     } else {
         loadExternalJS(rr_loader_config.carousel_script, () => {
             pollFunction(() => {
                 return !!$().owlCarousel;
             }, () => {
-                main_render()
+                run_render()
             });
         });
         loadExternalCSS(rr_loader_config.carousel_css);
