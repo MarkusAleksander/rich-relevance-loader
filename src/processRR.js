@@ -81,6 +81,10 @@ export default function processRR(data) {
         var R3_CATEGORY =
             // eslint-disable-next-line no-undef
             new r3_category();
+        safeLoop(config.placements, (idx, placement) => {
+            R3_CATEGORY.setId(placement.category_id);
+            R3_CATEGORY.setName(placement.category_name);
+        });
     }
     if (config.page_type === "item") {
         // TODO
